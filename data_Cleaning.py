@@ -9,6 +9,9 @@ df.head()
 #state field and
 #age of company
 #parsing of job description (python etc)
+#Salary parsing
+df['hourly'] = df['Salary Estimate'].apply(lambda x: 1 if 'per hour' in x.lower() else 0)
+df['employer_provided'] = df['Salary Estimate'].apply(lambda x: 1 if 'employer provided salary:' in x.lower() else 0)
 
 #1. Remove the rows which have -1 as salary value
 df = df[df['Salary Estimate'] != '-1']
@@ -61,6 +64,8 @@ excel_ct= df['excel_ct'].value_counts()
 
 #10. Drop the 1st column
 df_final = df.drop(['Unnamed: 0'], axis=1)
+df_final
+
 df_final.to_csv('salary_cleaned_data.csv', index = False)
 
 #pd.read_csv('salary_cleaned_data.csv')
